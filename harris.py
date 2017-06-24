@@ -3,18 +3,18 @@ import numpy as np
 from scipy.ndimage import maximum_filter
 from sys import exit
 
-'''
-Returns Harris-Stephens corner points for a give RGB or grayscale image
-
-@:param img is the image whose corners are to be located
-@:param w is the length (=width) of the patch that will be convolved with gradient product matrices
-@:param thres is the threshold value (i.e. Harris value) for a potential corner point
-@:param killzone is the window length(=width) to be used during non-local-maxima suppression
-@:param count is the number of corner points to be returned (might be lower if #positive Harris-valued points < count)
-@:returns a tuple whose elements are the row and column indices of the Harris-Stephens corner
-'''
 
 def harris(img,w = 5,thres = 0,killzone=21,count=0):
+    '''
+    Returns Harris-Stephens corner points for a give RGB or grayscale image
+    
+    @:param img is the image whose corners are to be located
+    @:param w is the length (=width) of the patch that will be convolved with gradient product matrices
+    @:param thres is the threshold value (i.e. Harris value) for a potential corner point
+    @:param killzone is the window length(=width) to be used during non-local-maxima suppression
+    @:param count is the number of corner points to be returned (might be lower if #positive Harris-valued points < count)
+    @:returns a tuple whose elements are the row and column indices of the Harris-Stephens corner
+    '''
 
     if(w%2==0 or killzone%2==0):
         exit("Error: Please enter an odd value for window size and/or killzone.")
