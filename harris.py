@@ -6,14 +6,26 @@ from sys import exit
 
 def harris(img,w = 5,thres = 0,killzone=21,count=0):
     '''
-    Returns Harris-Stephens corner points for a give RGB or grayscale image
+    Evaluates Harris-Stephens corner points for a give RGB or grayscale image
     
-    @:param img is the image whose corners are to be located
-    @:param w is the length (=width) of the patch that will be convolved with gradient product matrices
-    @:param thres is the threshold value (i.e. Harris value) for a potential corner point
-    @:param killzone is the window length(=width) to be used during non-local-maxima suppression
-    @:param count is the number of corner points to be returned (might be lower if #positive Harris-valued points < count)
-    @:returns a tuple whose elements are the row and column indices of the Harris-Stephens corner
+    img : array-like, 
+    This is the image whose corners are to be located
+    
+    w : int, optional (default = 5)
+    This is the length (=width) of the patch that will be convolved with gradient product matrices
+    
+    thres : int, optional (default = 0)
+    It is the threshold value (i.e. Harris value) for a potential corner point
+    
+    killzone : int, optional (default = 21)
+    Specifices the window length(=width) to be used during non-local-maxima suppression
+    
+    count : int, optional (default = 0)
+    This is the number of corner points to be returned (might be lower if #positive Harris-valued points < count)
+    
+    Returns
+    -------
+    A tuple whose elements are the row and column indices of the Harris-Stephens corner
     '''
 
     if(w%2==0 or killzone%2==0):
@@ -24,7 +36,8 @@ def harris(img,w = 5,thres = 0,killzone=21,count=0):
 
     #Generate gradient and gradient square matrices
     ksize = 5   #Gaussian kernel size for derivatives
-    imgdx = cv2.Sobel(src=img, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=ksize)  # image ddepth is set to 64F since we dont want negative derivates to be truncated to zero
+    # image ddepth is set to 64F since we dont want negative derivates to be truncated to zero
+    imgdx = cv2.Sobel(src=img, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=ksize)
     imgdy = cv2.Sobel(src=img, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=ksize)
 
     imgdx2 = np.square(imgdx)
